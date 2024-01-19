@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Recover Deleted Bugs</title>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  </head>
+  <body>
+    {% include "header.html" %}
+
+    <div class="container">
+      <div class="well text-center">
+        <h1>Recover Deleted Bugs</h1>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Add the alert-success div here -->
+      <div class="alert alert-success">
+        {% if recovery_message %}
+          {{ recovery_message }}
+        {% endif %}
+      </div>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Bug ID</th>
+            <th>Program</th>
+            <th>Summary</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for bug in bugs %}
+            <tr>
+              <td>{{ bug['bug_id'] }}</td>
+              <td>{{ bug['program'] }}</td>
+              <td>{{ bug['problem_summary'] }}</td>
+              <td>
+                <form action="{{ url_for('recover_bug') }}?bug_id={{ bug['bug_id'] }}" method="POST">
+                  <button type="submit" class="btn btn-success btn-xs">Recover</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
